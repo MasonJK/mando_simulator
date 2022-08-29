@@ -1,0 +1,58 @@
+<launch>
+    <!-- Frame Names -->
+    <arg name="robot"  default="robot"/>
+    <arg name="target" default="target"/>
+    
+    <!-- World File -->
+	<arg name="world_file" default="$(find pedsim_gazebo_plugin)/worlds/social_contexts.world"/>
+    <!-- Map File -->
+    <arg name="map_file" default="$(find mando_simulator)/maps/square_map.yaml"/>
+
+    <!-- Launch Gazebo World -->
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+        <arg name="use_sim_time" value="true"/>
+        <arg name="verbose" value="false"/>
+        <arg name="debug" value="false"/>
+        <arg name="gui" value="true" />
+        <arg name="world_name" value="$(arg world_file)"/>
+    </include>
+
+    <!-- Robots -->
+    <group ns="$(arg robot)">
+        <include file="$(find mando_simulator)/launch/mando_setup.launch">
+            <arg name="frame" value="$(arg robot)"/>
+            <arg name="x_pose" value="5.0"/>
+            <arg name="y_pose" value="5.0"/>
+            <arg name="z_pose" value="0.0"/>
+            <arg name="yaw" value="0.0"/>
+            <arg name="map_file" value="$(arg map_file)"/>
+            <arg name="map_frame_id" value="map"/>
+            <arg name="do_navigation" value="true"/>
+        </include>
+    </group>
+
+    <group ns="$(arg target)">
+        <include file="$(find mando_simulator)/launch/mando_setup.launch">
+            <arg name="frame" value="$(arg target)"/>
+            <arg name="x_pose" value="6.0"/>
+            <arg name="y_pose" value="6.0"/>
+            <arg name="z_pose" value="0.0"/>
+            <arg name="yaw" value="0.0"/>
+            <arg name="map_file" value="$(arg map_file)"/>
+            <arg name="map_frame_id" value="map"/>
+            <arg name="do_navigation" value="false"/>
+        </include>
+    </group>
+
+    <!-- pedsim simulator -->
+	<include file="$(find mando_simulator)/launch/mando_pedsim.launch"/>
+
+	<!-- pedsim simulator to gazebo -->
+	<node pkg="pedsim_gazebo_plugin" type="spawn_pedsim_agents.py" name="spawn_pedsim_agents"  output="screen"/>
+
+    <!-- rviz -->
+    <node pkg="rviz" type="rviz" name="rviz" args="-d $(find mando_simulator)/rviz/mando_simulator.rviz"/>
+
+    <!-- following target     -->
+    <node pkg="mando_simulator" type="follow_target" name="follow_target"  output="screen"/> 
+</launch>
