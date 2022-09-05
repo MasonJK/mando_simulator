@@ -15,11 +15,11 @@ rosdep update
 ```
 ### If having gazebo error 
 1. Error in REST request 
-   -> add 'export SVGA_VGPU10=0' in bashrc file
+    -> add 'export SVGA_VGPU10=0' in bashrc file
 2. libcurl: (51) SSL: no alternative certificate subject name matches target host name 'api.ignitionfuel.org'
-   -> cd ~/.ignition/fuel
-   -> gedit config.yaml
-   -> change 'url: https://api.ignitionfuel.org' to  'url: https://api.ignitionrobotics.org'
+    -> cd ~/.ignition/fuel
+    -> gedit config.yaml
+    -> change 'url: https://api.ignitionfuel.org' to  'url: https://api.ignitionrobotics.org'
 
 
 ## Required Package Installation
