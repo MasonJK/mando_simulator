@@ -9,6 +9,7 @@
   <arg name="enable_groups" default="true"/>
   <arg name="spawn_period" default="5.0"/>
   <arg name="robot_base_frame_id" default="robot/base_footprint"/>
+  <arg name="frame_id" default="robot/odom"/>
 
   <!-- Simulator -->
   <node name="pedsim_simulator" pkg="pedsim_simulator" type="pedsim_simulator" output="screen">
@@ -20,6 +21,7 @@
     <param name="simulation_factor" value="$(arg simulation_factor)" type="double"/>
     <param name="update_rate" value="$(arg update_rate)" type="double"/>
     <param name="spawn_period" value="$(arg spawn_period)" type="double"/>
+    <param name="frame_id" value="$(arg frame_id)"/>
     <param name="robot_base_frame_id" value="$(arg robot_base_frame_id)"/>
   </node>
 
