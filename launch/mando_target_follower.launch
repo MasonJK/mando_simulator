@@ -53,6 +53,6 @@
     <!-- rviz -->
     <node pkg="rviz" type="rviz" name="rviz" args="-d $(find mando_simulator)/rviz/mando_simulator.rviz"/>
 
-    <!-- following target     -->
+    <!-- following target -->
     <node pkg="mando_simulator" type="follow_target" name="follow_target"  output="screen"/> 
 </launch>
