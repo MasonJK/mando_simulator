@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This scenario file was created by SGDiCoP on 2014-04-16T15:14:48-->
+<scenario>
+    <!--Obstacles-->
+  <obstacle x1="-0.5" y1="-0.5" x2="29.5" y2="-0.5"/>
+  <obstacle x1="-0.5" y1="-0.5" x2="-0.5" y2="29.5"/>
+  <obstacle x1="-0.5" y1="29.5" x2="29.5" y2="29.5"/>
+  <obstacle x1="29.5" y1="29.5" x2="29.5" y2="-0.5"/>
+
+  <obstacle x1="-0.5" y1="9.5" x2="19.5" y2="9.5"/>
+  <obstacle x1="9.5" y1="19.5" x2="29.5" y2="19.5"/>
+</scenario>

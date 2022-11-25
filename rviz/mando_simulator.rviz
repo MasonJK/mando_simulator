@@ -527,15 +527,15 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/XYOrbit
-      Distance: 9.053205490112305
+      Distance: 39.503604888916016
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 4.016193866729736
-        Y: 5.4434590339660645
+        X: 3.9914069175720215
+        Y: 15.882929801940918
         Z: -1.2986125511815771e-5
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
@@ -564,4 +564,4 @@ Window Geometry:
     collapsed: true
   Width: 1869
   X: 544
-  Y: 201
+  Y: 171

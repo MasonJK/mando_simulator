@@ -1,0 +1,54 @@
+<launch>
+    <!-- Frame Names -->
+    <arg name="robot"  default=""/>
+    <arg name="length_factor" default="4"/>
+    
+    <!-- World File -->
+	<arg name="world_file" default="$(find mando_simulator)/worlds/corridor_walls.world"/>
+    <!-- Map File -->
+    <arg name="map_file" default="$(find mando_simulator)/maps/square_map.yaml"/>
+
+    <param name="length_factor" value="$(arg length_factor)" type="int"/>
+
+    <!-- Launch Gazebo World -->
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+        <arg name="use_sim_time" value="true"/>
+        <arg name="verbose" value="false"/>
+        <arg name="debug" value="false"/>
+        <arg name="gui" value="true" />
+        <arg name="world_name" value="$(arg world_file)"/>
+    </include>
+
+    <!-- Robots -->
+    <include file="$(find mando_simulator)/launch/mando_setup.launch">
+        <arg name="frame" value="$(arg robot)"/>
+        <arg name="x_pose" value="15.0"/>
+        <arg name="y_pose" value="4.0"/>
+        <arg name="z_pose" value="0.0"/>
+        <arg name="yaw" value="0.0"/>
+        <arg name="map_file" value="$(arg map_file)"/>
+        <arg name="map_frame_id" value="map"/>
+        <arg name="do_navigation" value="true"/>
+    </include>
+
+    <!-- pedsim simulator -->
+	<include file="$(find mando_simulator)/launch/mando_pedsim.launch">
+        <arg name="simulation_factor" value="0.75"/>
+        <arg name="scene_file" default="$(find mando_simulator)/scenarios/eval_test.xml"/>
+    </include>
+
+	<!-- pedsim simulator to gazebo -->
+	<node pkg="pedsim_gazebo_plugin" type="spawn_pedsim_agents.py" name="spawn_pedsim_agents"  output="screen"/>
+
+    <!-- rviz -->
+    <node pkg="rviz" type="rviz" name="rviz" args="-d $(find mando_simulator)/rviz/mando_simulator_single.rviz"/>
+
+    <!-- goal publisher -->
+    <!-- <node pkg="mando_simulator" type="goal_pub" name="goal_pub" output="screen"/> -->
+
+    <!-- kalmanfilter -->
+    <node pkg="mando_layer_pkg" type="kalmanfilter.py" name="kalmanfilter_node" output="screen">
+        <param name="length_factor" value="$(arg length_factor)" type="int"/>
+    </node>
+
+</launch>

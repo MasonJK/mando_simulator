@@ -4,7 +4,7 @@
     <arg name="target" default="target"/>
     
     <!-- World File -->
-	<arg name="world_file" default="$(find pedsim_gazebo_plugin)/worlds/social_contexts.world"/>
+	<arg name="world_file" default="$(find mando_simulator)/worlds/empty_walls.world"/>
     <!-- Map File -->
     <arg name="map_file" default="$(find mando_simulator)/maps/square_map.yaml"/>
 
@@ -19,7 +19,7 @@
 
     <!-- Robots -->
     <group ns="$(arg robot)">
-        <include file="$(find mando_simulator)/launch/mando_setup.launch">
+        <include file="$(find mando_simulator)/launch/mando_setup_ns.launch">
             <arg name="frame" value="$(arg robot)"/>
             <arg name="x_pose" value="5.0"/>
             <arg name="y_pose" value="5.0"/>
@@ -32,7 +32,7 @@
     </group>
 
     <group ns="$(arg target)">
-        <include file="$(find mando_simulator)/launch/mando_setup.launch">
+        <include file="$(find mando_simulator)/launch/mando_setup_ns.launch">
             <arg name="frame" value="$(arg target)"/>
             <arg name="x_pose" value="6.0"/>
             <arg name="y_pose" value="6.0"/>
@@ -45,7 +45,10 @@
     </group>
 
     <!-- pedsim simulator -->
-	<include file="$(find mando_simulator)/launch/mando_pedsim.launch"/>
+	<include file="$(find mando_simulator)/launch/mando_pedsim.launch">
+        <arg name="simulation_factor" value="0.75"/>
+        <arg name="scene_file" default="$(find mando_simulator)/scenarios/pedestrians.xml"/>
+    </include>
 
 	<!-- pedsim simulator to gazebo -->
 	<node pkg="pedsim_gazebo_plugin" type="spawn_pedsim_agents.py" name="spawn_pedsim_agents"  output="screen"/>
@@ -54,5 +57,8 @@
     <node pkg="rviz" type="rviz" name="rviz" args="-d $(find mando_simulator)/rviz/mando_simulator.rviz"/>
 
     <!-- following target -->
-    <node pkg="mando_simulator" type="follow_target" name="follow_target"  output="screen"/> 
+    <node pkg="mando_simulator" type="follow_target" name="follow_target"  output="screen">
+        <param name="safety_radius" value="2"/>
+    </node> 
+
 </launch>

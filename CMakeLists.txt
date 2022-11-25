@@ -9,8 +9,10 @@ project(mando_simulator)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
   cv_bridge
+  cartographer_ros
   dynamic_reconfigure
   geometry_msgs
+  std_msgs
   nav_msgs
   pedsim
   pedsim_msgs
@@ -20,7 +22,10 @@ find_package(catkin REQUIRED COMPONENTS
   sensor_msgs
   std_msgs
   tf
+  tf2
   visualization_msgs
+  roslaunch
+  rosbag
 )
 
 ## System dependencies are found with CMake's conventions
@@ -80,7 +85,7 @@ find_package(catkin REQUIRED COMPONENTS
 ## Generate added messages and services with any dependencies listed here
 # generate_messages(
 #   DEPENDENCIES
-#   geometry_msgs#   nav_msgs#   pedsim_msgs#   sensor_msgs#   std_msgs#   visualization_msgs
+#   geometry_msgs#   nav_msgs#   pedsim_msgs#   sensor_msgs#   std_msgs#   visualization_msgs# std_msgs
 # )
 
 ################################################
@@ -113,9 +118,9 @@ find_package(catkin REQUIRED COMPONENTS
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-#  INCLUDE_DIRS include
+ INCLUDE_DIRS include
 #  LIBRARIES mando_simulator
-#  CATKIN_DEPENDS cv_bridge dynamic_reconfigure geometry_msgs nav_msgs pedsim pedsim_msgs pedsim_utils roscpp rospy sensor_msgs std_msgs tf visualization_msgs
+#  CATKIN_DEPENDS cv_bridge dynamic_reconfigure geometry_msgs nav_msgs pedsim pedsim_msgs pedsim_utils roscpp rospy sensor_msgs std_msgs tf visualization_msgs tf2 std_msgs
 #  DEPENDS system_lib
 )
 
@@ -126,7 +131,7 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 include_directories(
-# include
+include
   ${catkin_INCLUDE_DIRS}
 )
 
@@ -160,6 +165,12 @@ include_directories(
 add_executable(follow_target src/follow_target.cpp)
 add_dependencies(follow_target ${follow_target_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(follow_target
+  ${catkin_LIBRARIES}
+)
+
+add_executable(goal_pub src/goal_pub.cpp)
+add_dependencies(goal_pub ${goal_pub_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(goal_pub
   ${catkin_LIBRARIES}
 )
 

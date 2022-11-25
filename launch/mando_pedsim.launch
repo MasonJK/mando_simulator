@@ -1,15 +1,16 @@
 <launch>
-  <arg name="simulation_factor" default="0.1"/> <!-- Speed up -->
+  <arg name="simulation_factor" default="1.5"/> <!-- Speed up -->
   <arg name="update_rate" default="25.0"/> <!-- Hz -->
 
-  <arg name="scene_file" default="$(find mando_simulator)/scenarios/pedestrians.xml"/>
+  <arg name="scene_file" default="$(find mando_simulator)/scenarios/filter_test.xml"/>
+  <!-- <arg name="scene_file" default="$(find mando_simulator)/scenarios/pedestrians.xml"/> -->
   <arg name="default_queue_size" default="10"/>
   <arg name="max_robot_speed" default="1.5"/>
-  <arg name="robot_mode" default="1"/>
+  <arg name="robot_mode" default="0"/>
   <arg name="enable_groups" default="true"/>
   <arg name="spawn_period" default="5.0"/>
-  <arg name="robot_base_frame_id" default="robot/base_footprint"/>
-  <arg name="frame_id" default="robot/odom"/>
+  <arg name="robot_base_frame_id" default="base_footprint"/>
+  <arg name="frame_id" default="map"/>
 
   <!-- Simulator -->
   <node name="pedsim_simulator" pkg="pedsim_simulator" type="pedsim_simulator" output="screen">

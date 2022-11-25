@@ -1,11 +1,11 @@
 <launch>
-    <arg name="frame" default="robot"/>
+    <arg name="frame" default=""/>
     <arg name="x_pose" default="0.0"/>
     <arg name="y_pose" default="0.0"/>
     <arg name="z_pose" default="0.0"/>
     <arg name="yaw" default="0.0"/>
     <arg name="map_file" default="$(find mando_simulator)/maps/square_map.yaml"/>
-    <arg name="map_frame_id" default="map"/>
+    <arg name="map_frame_id" default="odom"/>
     <arg name="do_navigation" default="true"/>
 
 
@@ -17,7 +17,7 @@
         <param name="publish_frequency" type="double" value="50.0" />
     </node>
     <!-- spawn robot in gazebo -->
-    <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-urdf -model $(arg frame) -x $(arg x_pose) -y $(arg y_pose) -z $(arg z_pose) -Y $(arg yaw) -param robot_description" />
+    <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-urdf -model robot -x $(arg x_pose) -y $(arg y_pose) -z $(arg z_pose) -Y $(arg yaw) -param robot_description" />
 
     <!-- laser_filter -->
     <node pkg="laser_filters" type="scan_to_scan_filter_chain" output="screen" name="laser_filter">
@@ -37,6 +37,6 @@
     </include>
     <!-- Move Base -->
     <group if="$(arg do_navigation)">
-        <include file="$(find mando_navigation)/launch/move_base.launch"/>
+        <include file="$(find mando_navigation)/launch/move_base_single.launch"/>
     </group>
 </launch>
